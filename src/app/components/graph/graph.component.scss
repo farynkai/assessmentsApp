@@ -1,0 +1,13 @@
+.graph-container {
+    position: absolute;
+    padding-top: 100px;
+
+    ngx-charts-bar-vertical {
+        position: relative;
+    }
+
+    .chart {
+        position: relative;
+        left: 60%;
+    }
+}

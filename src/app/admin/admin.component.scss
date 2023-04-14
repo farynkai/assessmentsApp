@@ -1,0 +1,25 @@
+.main-body {
+
+    max-width: 1400px;
+    margin: 0 auto;
+    text-align: center;
+
+    mat-form-field {
+        width: 100%;
+    }
+
+    .action {
+        display: flex;
+        gap: 5px;
+    }
+
+    ::ng-deep{
+        .mat-sort-header-container {
+            justify-content: center;
+        }
+
+        .mat-mdc-cell, .mat-column-action {
+            text-align: center;
+        }
+    }
+}

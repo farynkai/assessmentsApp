@@ -1,11 +1,8 @@
-export interface UserInfo {
-    first_name: string,
-    last_name: string,
-    token: string,
-    role: string
-}
-
-export interface UserCredential {
-    email: string,
-    password: string,
+export interface User {
+  name: string,
+  lastName: string,
+  dateOfBirth: string,
+  education: string,
+  role: string,
+  position: string,
 }

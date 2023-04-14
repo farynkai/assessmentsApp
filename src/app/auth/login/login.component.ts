@@ -2,9 +2,10 @@ import { Component } from '@angular/core';
 import { AbstractControl, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Store } from '@ngrx/store';
 
-import { UserCredential } from '../../interfaces/user';
-import * as AuthActions from '../../store/auth/auth.actions'
-import { UserState } from '../../interfaces/state';
+import { UserCredential } from '../../interfaces/auth';
+import { loginRequest } from '../../store/auth/auth.actions'
+import { UserInfo } from '../../interfaces/auth';
+import { setLoadingSpinner } from '../../store/loading-spinner/loading-spinner.actions';
 
 @Component({
   selector: 'app-login',
@@ -19,7 +20,7 @@ export class LoginComponent {
 
   constructor(
     private fb: FormBuilder,
-    private store: Store<UserState>
+    private store: Store<UserInfo>
   ) {
     this.initFilterForm();
   }
@@ -34,7 +35,8 @@ export class LoginComponent {
   login (credential: UserCredential): void {
     if (this.loginForm.valid) {
       this.loginForm.reset();
-      this.store.dispatch(AuthActions.loginRequest(credential))
+      this.store.dispatch(setLoadingSpinner({ status: true }));
+      this.store.dispatch(loginRequest(credential));
       this.setNullToErrors();
     }
   }
@@ -44,5 +46,4 @@ export class LoginComponent {
       value.setErrors(null);
     });
   }
-
 }

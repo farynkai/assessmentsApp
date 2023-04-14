@@ -1,3 +1,6 @@
 <mat-toolbar color="primary">
-  <span>CoolCoolCool App</span>
+  <span routerLink="/dashboard">CoolCool App</span>
+  <span class="example-spacer"></span>
+  <span routerLink="/admin" *ngIf="(userRole$ | async) === 'Admin'">Admin</span>
+  <button class="logout-btn" (click)="onLogout()">Logout</button>
 </mat-toolbar>

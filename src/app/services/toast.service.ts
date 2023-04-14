@@ -6,10 +6,7 @@ import { HttpErrorResponse } from '@angular/common/http';
   providedIn: 'root'
 })
 export class ToastService {
-  constructor(private snackBar: MatSnackBar) { }
-  successfulRegistration(email: string): void {
-    this.snackBar.open(`User ${email} log in successfully`, 'Close', { duration: 3000 });
-  }
+  constructor(private snackBar: MatSnackBar) {}
 
   showError(error: HttpErrorResponse): void {
     this.snackBar.open(`Error message: ${error.message}`, 'Close', { duration: 3000, });

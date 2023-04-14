@@ -1,27 +1,38 @@
 import { Action, createReducer, on } from '@ngrx/store';
 
-import { loginFailure, loginSuccess } from './auth.actions';
+import { autoLogout, loginFailure, loginSuccess } from './auth.actions';
 import { UserState } from '../../interfaces/state';
 
 export const initialState: UserState = {
-  token: null,
+  userData: {},
+  isLogged: false
 }
 
-export const dataListFeatureKey = 'users';
+export const authFeatureKey = 'users';
 
 const authReducer = createReducer(
   initialState,
-  on(loginSuccess, (state, { accessToken }) => {
+  on(loginSuccess, (state, { loginSuccessResponse }) => {
     return {
       ...state,
-      token: accessToken,
+      userData: loginSuccessResponse,
+      isLogged: true,
     }
   }),
   on(loginFailure, (state, { error }) => {
     return {
       ...state,
-      loginError: error,
-      token: null,
+      userData: {},
+      isLogged: false,
+      loginError: error.message
+    }
+  }),
+  on(autoLogout, (state) => {
+    return {
+      ...state,
+      userData: {},
+      isLogged: false,
+      loginError: ''
     }
   }),
 );
