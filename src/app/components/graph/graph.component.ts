@@ -8,6 +8,7 @@ import { GraphsService } from '../../services/graphs.service';
 import { UnsubscriberComponent } from '../unsubscriber/unsubscriber.component';
 import { ChartService } from '../../services/chart.service';
 import { selectUserRole } from '../../store/auth/auth.selectors';
+import { UserState } from '../../interfaces/state';
 
 @Component({
   selector: 'app-graph',
@@ -16,7 +17,7 @@ import { selectUserRole } from '../../store/auth/auth.selectors';
   providers: [TitleCasePipe]
 })
 export class GraphComponent extends UnsubscriberComponent implements OnInit {
-  userRole: any;
+  userRole: string;
   graphId: string;
   view: any = [700, 500];
   showXAxis = true;
@@ -34,7 +35,7 @@ export class GraphComponent extends UnsubscriberComponent implements OnInit {
     private graphServise: GraphsService,
     private d3PackedBubbleChartService: ChartService,
     private titleCasePipe: TitleCasePipe,
-    private store: Store
+    private store: Store<UserState>
   ) {
     super();
   }
@@ -42,6 +43,7 @@ export class GraphComponent extends UnsubscriberComponent implements OnInit {
     this.store.select(selectUserRole).pipe(
       takeUntil(this.destroyed$)
     ).subscribe((role) => this.userRole = role);
+
     this.graphId = this.route.snapshot.params['id'];
     this.graphServise.getGraph(this.graphId).pipe(
       takeUntil(this.destroyed$)

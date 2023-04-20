@@ -7,22 +7,22 @@ export const selectDataTableState = createFeatureSelector<UserState>(authFeature
 
 export const selectToken = createSelector(
   selectDataTableState,
-  (state: UserState) => state.userData.token
+  (state: UserState) => state.userData?.token
 );
 
 export const isAuthenticated = createSelector(
   selectDataTableState,
-  (state: UserState) => state.userData.token ? true : false
+  (state: UserState) => state.userData?.token ? true : false
 );
 
 export const selectUserRole = createSelector(
   selectDataTableState,
-  (state: UserState) => state.userData.role
+  (state: UserState) => state.userData?.role
 );
 
 export const selectUserName = createSelector(
   selectDataTableState,
-  (state: UserState) => state.userData.first_name
+  (state: UserState) => state.userData?.first_name
 );
 
 export const selectUserData = createSelector(

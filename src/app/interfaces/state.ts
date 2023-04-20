@@ -2,9 +2,8 @@ import { UserInfo } from './auth';
 import { Report } from './report';
 
 export interface UserState {
-  userData: UserInfo,
-  isLogged: boolean,
-  loginError?: string
+  userData: UserInfo | null,
+  loginError?: string | null
 }
 
 export interface ReportsState {

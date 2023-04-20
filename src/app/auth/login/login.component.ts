@@ -4,7 +4,6 @@ import { Store } from '@ngrx/store';
 
 import { UserCredential } from '../../interfaces/auth';
 import { loginRequest } from '../../store/auth/auth.actions'
-import { UserInfo } from '../../interfaces/auth';
 import { setLoadingSpinner } from '../../store/loading-spinner/loading-spinner.actions';
 
 @Component({
@@ -20,7 +19,7 @@ export class LoginComponent {
 
   constructor(
     private fb: FormBuilder,
-    private store: Store<UserInfo>
+    private store: Store
   ) {
     this.initFilterForm();
   }

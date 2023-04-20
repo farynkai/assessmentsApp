@@ -1,0 +1,25 @@
+.container {
+    width: 400px;
+    padding: 10px;
+
+    h2 {
+        text-align: center;
+    }
+
+    .block-input {
+        width: 100%;
+    }
+
+    .btn-block {
+        display: flex;
+        width: 210px;
+        margin: 0 auto;
+        justify-content: space-between;
+
+        button {
+            width: 100px;
+            height: 40px;
+            font-size: 16px;
+        }
+    }
+}

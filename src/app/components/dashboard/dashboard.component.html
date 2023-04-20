@@ -4,7 +4,7 @@
     <li class="report-item" *ngFor="let report of reports$ | async">
       <h2 class="report-name">{{ report.name }}</h2>
       <img src="{{ report.image_url }}" alt="report-image">
-      <button mat-flat-button color="primary" routerLink="/graph/{{ report.id }}">Report</button>
+      <button class="button" mat-flat-button color="primary" routerLink="/graph/{{ report.id }}">Report</button>
     </li>
   </ul>
 </div>

@@ -1,6 +1,8 @@
 .graph-container {
     position: absolute;
     padding-top: 100px;
+    width: 100%;
+    overflow-x: hidden;
 
     ngx-charts-bar-vertical {
         position: relative;
@@ -8,6 +10,6 @@
 
     .chart {
         position: relative;
-        left: 60%;
+        left: 25%;
     }
 }

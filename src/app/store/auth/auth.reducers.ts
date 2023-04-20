@@ -4,8 +4,7 @@ import { autoLogout, loginFailure, loginSuccess } from './auth.actions';
 import { UserState } from '../../interfaces/state';
 
 export const initialState: UserState = {
-  userData: {},
-  isLogged: false
+  userData: null,
 }
 
 export const authFeatureKey = 'users';
@@ -16,23 +15,20 @@ const authReducer = createReducer(
     return {
       ...state,
       userData: loginSuccessResponse,
-      isLogged: true,
     }
   }),
   on(loginFailure, (state, { error }) => {
     return {
       ...state,
-      userData: {},
-      isLogged: false,
+      userData: null,
       loginError: error.message
     }
   }),
   on(autoLogout, (state) => {
     return {
       ...state,
-      userData: {},
-      isLogged: false,
-      loginError: ''
+      userData: null,
+      loginError: null
     }
   }),
 );

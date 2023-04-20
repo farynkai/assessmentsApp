@@ -4,13 +4,14 @@ import { Store } from '@ngrx/store';
 import { exhaustMap, Observable, of } from 'rxjs';
 
 import { isAuthenticated } from '../store/auth/auth.selectors';
+import { UserState } from '../interfaces/state';
 
 @Injectable({
   providedIn: 'root'
 })
 export class AuthGuard implements CanActivate {
   constructor(
-    private store: Store,
+    private store: Store<UserState>,
     private router: Router
   ) {}
   canActivate( route: ActivatedRouteSnapshot, state: RouterStateSnapshot ): Observable<boolean> {
