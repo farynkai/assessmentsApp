@@ -27,7 +27,7 @@ export class AuthEffects {
           map((userInfo) => {
             this.store.dispatch(setLoadingSpinner({ status: false }));
             this.authService.setUserInLocalStorage(userInfo);
-            this.authService.navigateTo('dashboard');
+            this.router.navigate(['home']);
             return AuthActions.loginSuccess( { loginSuccessResponse: userInfo });
           }),
           catchError((error) => {
@@ -50,7 +50,7 @@ export class AuthEffects {
     ofType(AuthActions.autoLogout),
     map((action) => {
       this.authService.deleteUserFromLocalStorage();
-      this.authService.navigateTo('login');
+      this.router.navigate(['login']);
     })
   ), { dispatch: false });
 }

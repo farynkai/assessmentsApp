@@ -12,17 +12,17 @@ import { MatDialogModule } from '@angular/material/dialog';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatNativeDateModule } from '@angular/material/core';
 
-import { AdminRoutingModule } from './admin-routing.module';
-import { AdminComponent } from './admin.component';
+import { HomeRoutingModule } from './home-routing.module';
+import { HomeComponent } from './home.component';
 import { UpdateUserComponent } from './update-user/update-user.component';
 import { AddUserComponent } from './add-user/add-user.component';
 
 @NgModule({
-  declarations: [AdminComponent, UpdateUserComponent, AddUserComponent],
+  declarations: [HomeComponent, UpdateUserComponent, AddUserComponent],
   imports: [
     CommonModule,
     ReactiveFormsModule,
-    AdminRoutingModule,
+    HomeRoutingModule,
     MatTableModule,
     MatPaginatorModule,
     MatSortModule,
@@ -34,6 +34,6 @@ import { AddUserComponent } from './add-user/add-user.component';
     MatDatepickerModule,
     MatNativeDateModule
   ],
-  exports: [AdminComponent],
+  exports: [HomeComponent],
 })
-export class AdminModule { }
+export class HomeModule { }

@@ -13,7 +13,7 @@ import { UserState } from './interfaces/state';
   styleUrls: ['./app.component.scss']
 })
 export class AppComponent implements OnInit, OnDestroy {
-  title = 'assessmentsApp';
+  title = 'testApp';
   showHeader: boolean;
   showLoading$ = this.store.select(getLoading);
   destroyed$ = new Subject<void>();

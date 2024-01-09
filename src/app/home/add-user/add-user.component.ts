@@ -1,9 +1,9 @@
 import { Component } from '@angular/core';
 import { AbstractControl, FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { MatDialogRef } from '@angular/material/dialog';
+import { Router } from '@angular/router';
 
 import { User } from '../../interfaces/user';
-import { AdminService } from '../admin.service';
+import { HomeService } from '../home.service';
 import { ValidatorsService } from '../../services/validators.service';
 
 @Component({
@@ -19,8 +19,8 @@ export class AddUserComponent {
 
   constructor(
     private fb: FormBuilder,
-    private matDialog: MatDialogRef<AddUserComponent>,
-    private adminService: AdminService,
+    private homeService: HomeService,
+    private router: Router,
     private validatorsService: ValidatorsService
   ) {
     this.initFilterForm();
@@ -41,13 +41,14 @@ export class AddUserComponent {
     if (this.userForm.valid) {
       this.userForm.reset();
       this.setNullToErrors();
-      this.adminService.newUser.next(userData);
-      this.matDialog.close();
+      this.homeService.newUser.next(userData);
+      this.router.navigate(['home']);
     }
   }
 
   cancel(): void {
-    this.matDialog.close();
+    this.setNullToErrors();
+    this.router.navigate(['home']);
   }
 
   setNullToErrors(): void {

@@ -15,17 +15,3 @@ export const isAuthenticated = createSelector(
   (state: UserState) => state.userData?.token ? true : false
 );
 
-export const selectUserRole = createSelector(
-  selectDataTableState,
-  (state: UserState) => state.userData?.role
-);
-
-export const selectUserName = createSelector(
-  selectDataTableState,
-  (state: UserState) => state.userData?.first_name
-);
-
-export const selectUserData = createSelector(
-  selectDataTableState,
-  (state: UserState) => state.userData
-);

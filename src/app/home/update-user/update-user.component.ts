@@ -1,9 +1,10 @@
-import { Component, Inject } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { AbstractControl, FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
+import { Router } from '@angular/router';
+import { take } from 'rxjs';
 
 import { User } from '../../interfaces/user';
-import { AdminService } from '../admin.service';
+import { HomeService } from '../home.service';
 import { ValidatorsService } from '../../services/validators.service';
 
 @Component({
@@ -11,19 +12,26 @@ import { ValidatorsService } from '../../services/validators.service';
   templateUrl: './update-user.component.html',
   styleUrls: ['./update-user.component.scss']
 })
-export class UpdateUserComponent {
+export class UpdateUserComponent implements OnInit {
   editForm!: FormGroup;
+  data: User;
   get EditFormControls(): { [key: string]: AbstractControl } {
     return this.editForm.controls;
   }
 
   constructor(
     private fb: FormBuilder,
-    private matDialog: MatDialogRef<UpdateUserComponent>,
-    @Inject(MAT_DIALOG_DATA) public data: User,
-    private adminService: AdminService,
+    private homeService: HomeService,
+    private router: Router,
     private validatorsService: ValidatorsService
-  ) {
+  ) {}
+
+  ngOnInit() {
+    this.homeService.userToEdit.pipe(
+      take(1)
+    ).subscribe((user: User) => {
+      this.data = user
+    })
     this.initFilterForm();
   }
 
@@ -50,12 +58,12 @@ export class UpdateUserComponent {
   edit(userData: User): void {
     if (this.editForm.valid) {
       userData.id = this.data.id;
-      this.adminService.updatedData.next(userData);
-      this.matDialog.close();
+      this.homeService.updatedData.next(userData);
+      this.router.navigate(['home']);
     }
   }
 
   cancel(): void {
-    this.matDialog.close();
+    this.router.navigate(['home']);
   }
 }

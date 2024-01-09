@@ -2,23 +2,19 @@ import { AfterViewInit, Component, OnInit, ViewChild } from '@angular/core';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort, Sort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { LiveAnnouncer } from '@angular/cdk/a11y';
-import { takeUntil, take } from 'rxjs';
-import { MatDialog } from '@angular/material/dialog';
+import { take } from 'rxjs';
 
-import { UnsubscriberComponent } from '../components/unsubscriber/unsubscriber.component';
 import { User } from '../interfaces/user';
-import { UpdateUserComponent } from './update-user/update-user.component';
-import { AdminService } from './admin.service';
-import { AddUserComponent } from './add-user/add-user.component';
+import { HomeService } from './home.service';
 
 @Component({
-  selector: 'app-admin-section',
-  templateUrl: './admin.component.html',
-  styleUrls: ['./admin.component.scss']
+  selector: 'app-home-section',
+  templateUrl: './home.component.html',
+  styleUrls: ['./home.component.scss']
 })
-export class AdminComponent extends UnsubscriberComponent implements OnInit, AfterViewInit{
+export class HomeComponent implements OnInit, AfterViewInit{
   displayedColumns: string[] = ['number', 'name', 'lastName', 'dateOfBirth', 'education', 'role', 'position', 'action'];
   dataSource!: MatTableDataSource<User[]>;
   users = [];
@@ -28,19 +24,12 @@ export class AdminComponent extends UnsubscriberComponent implements OnInit, Aft
   constructor(
     private activatedRoute: ActivatedRoute,
     private _liveAnnouncer: LiveAnnouncer,
-    private matDialog: MatDialog,
-    private adminService: AdminService
-  ) {
-    super();
-  }
+    private router: Router,
+    private homeService: HomeService
+  ) {}
 
   ngOnInit() {
-    this.activatedRoute.data.pipe(
-      takeUntil(this.destroyed$)
-    ).subscribe((data) => {
-      this.users = data['users'];
-      this.users.map((el, index) => el['id'] = index + 1);
-    });
+    this.users = JSON.parse(localStorage.getItem('users')) || [];
     this.dataSource = new MatTableDataSource(this.users);
   }
 
@@ -70,31 +59,42 @@ export class AdminComponent extends UnsubscriberComponent implements OnInit, Aft
   }
 
   addItem(): void {
-    this.matDialog.open(AddUserComponent);
-    this.adminService.newUser.pipe(
+    this.router.navigate(['add']);
+    this.users = JSON.parse(localStorage.getItem('users')) || [];
+    this.homeService.newUser.pipe(
       take(1)
     ).subscribe((newUser: User) => {
-      newUser.id = this.users.slice(-1).pop().id + 1;
+      if (this.users.length > 0) {
+        newUser.id = this.users.slice(-1).pop().id + 1;
+      } else {
+        newUser.id = 1;
+      }
       this.users.push(newUser);
+      localStorage.setItem('users', JSON.stringify(this.users));
       this.dataSource = new MatTableDataSource(this.users);
       this.dataSourceUpdate();
-    })
+    });
   }
 
   updateItem(item): void {
-    this.matDialog.open(UpdateUserComponent, { data: item });
-    this.adminService.updatedData.pipe(
-      takeUntil(this.destroyed$)
+    this.homeService.userToEdit.next(item);
+    this.router.navigate(['edit']);
+    this.users = JSON.parse(localStorage.getItem('users'));
+    this.homeService.updatedData.pipe(
+      take(1)
     ).subscribe((newData: User) => {
       const itemIndex = this.users.findIndex((item => item.id === newData['id']));
       this.users[itemIndex] = newData;
+      localStorage.setItem('users', JSON.stringify(this.users));
       this.dataSource = new MatTableDataSource(this.users);
       this.dataSourceUpdate();
     })
   }
 
   removeItem(item): void {
-    this.users = this.users.filter( el => el.id !== item.id );
+    const users = JSON.parse(localStorage.getItem('users'));
+    this.users = users.filter( el => el.id !== item.id );
+    localStorage.setItem('users', JSON.stringify(this.users))
     this.dataSource = new MatTableDataSource(this.users);
     this.dataSourceUpdate();
   }
