@@ -61,24 +61,6 @@ export class HomeComponent implements OnInit, AfterViewInit{
     }
   }
 
-  addItem(): void {
-    this.router.navigate(['add']);
-    this.users = JSON.parse(localStorage.getItem('users')) || [];
-    this.homeService.newUser.pipe(
-      take(1)
-    ).subscribe((newUser: User) => {
-      if (this.users.length > 0) {
-        newUser.id = this.users.slice(-1).pop().id + 1;
-      } else {
-        newUser.id = 1;
-      }
-      this.users.push(newUser);
-      localStorage.setItem('users', JSON.stringify(this.users));
-      this.dataSource = new MatTableDataSource(this.users);
-      this.dataSourceUpdate();
-    });
-  }
-
   updateItem(item: User): void {
     this.homeService.userToEdit.next(item);
     this.router.navigate(['edit']);

@@ -11,7 +11,7 @@ import { UserState } from '../../interfaces/state';
 })
 export class HeaderComponent {
   constructor( private store: Store<UserState> ) {}
-  onLogout() {
+  onLogout(): void {
     this.store.dispatch(autoLogout());
   }
 }

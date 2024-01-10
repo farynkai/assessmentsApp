@@ -40,7 +40,14 @@ export class AddUserComponent {
   addUser(userData: User): void {
     this.userForm.reset();
     this.setNullToErrors();
-    this.homeService.newUser.next(userData);
+    const users = JSON.parse(localStorage.getItem('users')) || [];
+    if (users.length > 0) {
+      userData.id = users.slice(-1).pop().id + 1;
+    } else {
+      userData.id = 1;
+    }
+    users.push(userData);
+    localStorage.setItem('users', JSON.stringify(users));
     this.router.navigate(['home']);
   }
 

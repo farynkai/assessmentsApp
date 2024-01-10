@@ -4,7 +4,7 @@
     <ng-container *ngIf="users.length === 0">
       <p>User list is empty, you can add user.</p>
     </ng-container>
-    <button mat-flat-button class="add-btn" (click)="addItem()" color="primary">Add User</button>
+    <button mat-flat-button class="add-btn" [routerLink]="'add'" color="primary">Add User</button>
   </div>
   <ng-container *ngIf="users.length > 0">
     <mat-form-field>

@@ -7,6 +7,5 @@ import { BehaviorSubject, Subject } from 'rxjs';
 export class HomeService {
   userToEdit = new BehaviorSubject({});
   updatedData = new Subject();
-  newUser = new Subject();
   constructor() {}
 }

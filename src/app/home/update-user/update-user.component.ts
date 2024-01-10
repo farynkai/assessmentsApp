@@ -26,7 +26,7 @@ export class UpdateUserComponent implements OnInit {
     private validatorsService: ValidatorsService
   ) {}
 
-  ngOnInit() {
+  ngOnInit(): void {
     this.homeService.userToEdit.pipe(
       take(1)
     ).subscribe((user: User) => {
