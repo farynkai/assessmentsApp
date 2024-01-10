@@ -38,12 +38,10 @@ export class AddUserComponent {
   }
 
   addUser(userData: User): void {
-    if (this.userForm.valid) {
-      this.userForm.reset();
-      this.setNullToErrors();
-      this.homeService.newUser.next(userData);
-      this.router.navigate(['home']);
-    }
+    this.userForm.reset();
+    this.setNullToErrors();
+    this.homeService.newUser.next(userData);
+    this.router.navigate(['home']);
   }
 
   cancel(): void {

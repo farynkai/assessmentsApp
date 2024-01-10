@@ -30,37 +30,26 @@ export class UpdateUserComponent implements OnInit {
     this.homeService.userToEdit.pipe(
       take(1)
     ).subscribe((user: User) => {
-      this.data = user
+      this.data = user;
     })
     this.initFilterForm();
   }
 
   private initFilterForm(): void {
     this.editForm = this.fb.group({
-      name: ['', Validators.required],
-      lastName: ['', Validators.required],
-      dateOfBirth: ['', [this.validatorsService.dateValidator, Validators.required]],
-      education: ['', Validators.required],
-      role: ['', Validators.required],
-      position: ['', Validators.required]
-    });
-
-    this.editForm.setValue({
-      name: this.data.name,
-      lastName: this.data.lastName,
-      dateOfBirth: this.data.dateOfBirth,
-      education: this.data.education,
-      role: this.data.role,
-      position: this.data.position
+      name: [this.data.name, Validators.required],
+      lastName: [this.data.lastName, Validators.required],
+      dateOfBirth: [this.data.dateOfBirth, [this.validatorsService.dateValidator, Validators.required]],
+      education: [this.data.education, Validators.required],
+      role: [this.data.role, Validators.required],
+      position: [this.data.position, Validators.required]
     });
   }
 
   edit(userData: User): void {
-    if (this.editForm.valid) {
-      userData.id = this.data.id;
-      this.homeService.updatedData.next(userData);
-      this.router.navigate(['home']);
-    }
+    userData.id = this.data.id;
+    this.homeService.updatedData.next(userData);
+    this.router.navigate(['home']);
   }
 
   cancel(): void {

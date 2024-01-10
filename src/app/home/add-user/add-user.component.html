@@ -52,7 +52,7 @@
     </div>
 
     <div class="btn-block">
-      <button type="submit" mat-flat-button color="primary">Add</button>
+      <button [disabled]="!this.userForm.valid" type="submit" mat-flat-button color="primary">Add</button>
       <button mat-flat-button (click)="cancel()" color="warn">Cancel</button>
     </div>
   </form>

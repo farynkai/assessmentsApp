@@ -18,7 +18,7 @@
     </div>
 
     <div class="btn-block">
-      <button type="submit" mat-flat-button color="primary">Submit</button>
+      <button [disabled]="!this.loginForm.valid" type="submit" mat-flat-button color="primary">Submit</button>
     </div>
   </form>
 </div>

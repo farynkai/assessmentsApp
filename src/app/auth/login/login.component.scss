@@ -24,7 +24,7 @@
 }
 
 ::ng-deep {
-    .mat-mdc-unelevated-button:not(:disabled) {
+    .mdc-button.mat-mdc-button-base {
         width: 140px;
         font-size: large;
         height: 48px;

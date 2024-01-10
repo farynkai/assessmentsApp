@@ -32,12 +32,10 @@ export class LoginComponent {
   }
 
   login (credential: UserCredential): void {
-    if (this.loginForm.valid) {
-      this.loginForm.reset();
-      this.store.dispatch(setLoadingSpinner({ status: true }));
-      this.store.dispatch(loginRequest(credential));
-      this.setNullToErrors();
-    }
+    this.loginForm.reset();
+    this.store.dispatch(setLoadingSpinner({ status: true }));
+    this.store.dispatch(loginRequest(credential));
+    this.setNullToErrors();
   }
 
   setNullToErrors(): void {
