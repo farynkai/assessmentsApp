@@ -17,7 +17,6 @@ import { HeaderComponent } from './components/header/header.component';
 import { environment } from '../environments/environment';
 import { reducers } from './store/reducers';
 import { ToastService } from './services/toast.service';
-import { AuthGuard } from './guards/auth.guard';
 import { AuthService } from './auth/auth.service';
 import { HomeModule } from './home/home.module';
 import { LoadingSpinnerComponent } from './components/loading-spinner/loading-spinner.component';
@@ -46,8 +45,7 @@ import { DeleteNotificationComponent } from './components/delete-notification/de
   ],
   providers: [
     ToastService,
-    AuthService,
-    AuthGuard
+    AuthService
   ],
   bootstrap: [AppComponent]
 })
