@@ -5,9 +5,11 @@ import { MatTableDataSource } from '@angular/material/table';
 import { ActivatedRoute, Router } from '@angular/router';
 import { LiveAnnouncer } from '@angular/cdk/a11y';
 import { take } from 'rxjs';
+import { MatDialog } from "@angular/material/dialog";
 
 import { User } from '../interfaces/user';
 import { HomeService } from './home.service';
+import { DeleteNotificationComponent } from "../components/delete-notification/delete-notification.component";
 
 @Component({
   selector: 'app-home-section',
@@ -25,10 +27,11 @@ export class HomeComponent implements OnInit, AfterViewInit{
     private activatedRoute: ActivatedRoute,
     private _liveAnnouncer: LiveAnnouncer,
     private router: Router,
-    private homeService: HomeService
+    private homeService: HomeService,
+    public dialog: MatDialog
   ) {}
 
-  ngOnInit() {
+  ngOnInit(): void {
     this.users = JSON.parse(localStorage.getItem('users')) || [];
     this.dataSource = new MatTableDataSource(this.users);
   }
@@ -41,7 +44,7 @@ export class HomeComponent implements OnInit, AfterViewInit{
     }
   }
 
-  ngAfterViewInit() {
+  ngAfterViewInit(): void {
     this.dataSourceUpdate();
   }
 
@@ -76,7 +79,7 @@ export class HomeComponent implements OnInit, AfterViewInit{
     });
   }
 
-  updateItem(item): void {
+  updateItem(item: User): void {
     this.homeService.userToEdit.next(item);
     this.router.navigate(['edit']);
     this.users = JSON.parse(localStorage.getItem('users'));
@@ -99,4 +102,18 @@ export class HomeComponent implements OnInit, AfterViewInit{
     this.dataSourceUpdate();
   }
 
+  openDialog(item: User): void {
+    const dialogRef = this.dialog.open(DeleteNotificationComponent, {
+      width: '300px',
+      data: item
+    });
+
+    dialogRef.afterClosed()
+      .pipe(take(1))
+      .subscribe(confirmed => {
+        if (confirmed) {
+          this.removeItem(item);
+        }
+      })
+  }
 }

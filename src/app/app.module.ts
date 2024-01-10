@@ -7,6 +7,7 @@ import { StoreModule } from '@ngrx/store';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { StoreDevtoolsModule } from '@ngrx/store-devtools';
+import { MatDialogModule } from "@angular/material/dialog";
 
 import { AppComponent } from './app.component';
 import { AppRoutingModule } from './app-routing.module';
@@ -20,11 +21,13 @@ import { AuthGuard } from './guards/auth.guard';
 import { AuthService } from './auth/auth.service';
 import { HomeModule } from './home/home.module';
 import { LoadingSpinnerComponent } from './components/loading-spinner/loading-spinner.component';
+import { DeleteNotificationComponent } from './components/delete-notification/delete-notification.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     HeaderComponent,
+    DeleteNotificationComponent,
     LoadingSpinnerComponent
   ],
   imports: [
@@ -36,6 +39,7 @@ import { LoadingSpinnerComponent } from './components/loading-spinner/loading-sp
     MatSnackBarModule,
     MatToolbarModule,
     AppRoutingModule,
+    MatDialogModule,
     AuthModule,
     HomeModule,
     StoreDevtoolsModule.instrument({ name: 'NgRx Test App', logOnly: environment.production }),
