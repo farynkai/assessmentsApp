@@ -13,9 +13,6 @@ import { ValidatorsService } from '../../../shared/services/validators.service';
 })
 export class AddUserComponent {
   userForm!: FormGroup;
-  public get UserFormControls(): { [key: string]: AbstractControl } {
-    return this.userForm.controls;
-  }
 
   constructor(
     private fb: FormBuilder,
@@ -23,6 +20,10 @@ export class AddUserComponent {
     private validatorsService: ValidatorsService
   ) {
     this.initFilterForm();
+  }
+
+  public get UserFormControls(): { [key: string]: AbstractControl } {
+    return this.userForm.controls;
   }
 
   public addUser(userData: User): void {

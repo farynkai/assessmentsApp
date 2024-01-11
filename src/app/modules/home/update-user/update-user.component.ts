@@ -1,5 +1,5 @@
 import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
-import { AbstractControl, FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { take } from 'rxjs';
 
@@ -16,10 +16,6 @@ export class UpdateUserComponent implements OnInit {
   editForm!: FormGroup;
   data: User;
   users: User[];
-
-  public get EditFormControls(): { [key: string]: AbstractControl } {
-    return this.editForm.controls;
-  }
 
   constructor(
     private fb: FormBuilder,

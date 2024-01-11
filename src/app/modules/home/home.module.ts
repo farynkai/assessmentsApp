@@ -16,9 +16,15 @@ import { HomeRoutingModule } from './home-routing.module';
 import { HomeComponent } from './home.component';
 import { UpdateUserComponent } from './update-user/update-user.component';
 import { AddUserComponent } from './add-user/add-user.component';
+import { UserFormComponent } from "./user-form/user-form.component";
 
 @NgModule({
-  declarations: [HomeComponent, UpdateUserComponent, AddUserComponent],
+  declarations: [
+    HomeComponent,
+    UpdateUserComponent,
+    AddUserComponent,
+    UserFormComponent
+  ],
   imports: [
     CommonModule,
     ReactiveFormsModule,

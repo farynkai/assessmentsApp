@@ -1,0 +1,51 @@
+<form class="mat-dialog-content" [formGroup]="form">
+  <div>
+    <mat-form-field appearance="outline" class="block-input">
+      <mat-label>First Name</mat-label>
+      <input matInput formControlName="name" autocomplete="on">
+      <mat-error *ngIf="(UserFormControls['name'].invalid && UserFormControls['name'].touched)">Name is required</mat-error>
+    </mat-form-field>
+  </div>
+
+  <div>
+    <mat-form-field appearance="outline" class="block-input">
+      <mat-label>Last Name</mat-label>
+      <input matInput formControlName="lastName" autocomplete="on">
+      <mat-error *ngIf="(UserFormControls['lastName'].invalid && UserFormControls['lastName'].touched)">Last name is required</mat-error>
+    </mat-form-field>
+  </div>
+
+  <div>
+    <mat-form-field appearance="outline" class="block-input">
+      <mat-label>Date of Birth</mat-label>
+      <input matInput [matDatepicker]="picker" formControlName="dateOfBirth">
+      <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
+      <mat-datepicker #picker></mat-datepicker>
+      <mat-error *ngIf="((UserFormControls['dateOfBirth'].invalid || UserFormControls['dateOfBirth'].errors?.['GreaterThanToday']) && UserFormControls['dateOfBirth'].touched)">Date of birth is invalid</mat-error>
+    </mat-form-field>
+  </div>
+
+  <div>
+    <mat-form-field appearance="outline" class="block-input">
+      <mat-label>Education</mat-label>
+      <input matInput formControlName="education" autocomplete="on">
+      <mat-error *ngIf="(UserFormControls['education'].invalid && UserFormControls['education'].touched)">Education is required</mat-error>
+    </mat-form-field>
+  </div>
+
+  <div>
+    <mat-form-field appearance="outline" class="block-input">
+      <mat-label>Role</mat-label>
+      <input matInput formControlName="role" autocomplete="on">
+      <mat-error *ngIf="(UserFormControls['role'].invalid && UserFormControls['role'].touched)">Role is required</mat-error>
+    </mat-form-field>
+  </div>
+
+  <div>
+    <mat-form-field appearance="outline" class="block-input">
+      <mat-label>Position</mat-label>
+      <input matInput formControlName="position" autocomplete="on">
+      <mat-error *ngIf="(UserFormControls['position'].invalid && UserFormControls['position'].touched)">Last name is required</mat-error>
+    </mat-form-field>
+  </div>
+</form>
