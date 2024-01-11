@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { Store } from '@ngrx/store';
 
-import { autoLogout } from '../../store/auth/auth.actions';
+import { autoLogout } from '../../../store/auth/auth.actions';
 import { UserState } from '../../interfaces/state';
 
 @Component({

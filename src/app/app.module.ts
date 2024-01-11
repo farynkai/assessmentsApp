@@ -12,15 +12,15 @@ import { MatDialogModule } from "@angular/material/dialog";
 import { AppComponent } from './app.component';
 import { AppRoutingModule } from './app-routing.module';
 import { AuthEffects } from './store/auth/auth.effects';
-import { AuthModule } from './auth/auth.module';
-import { HeaderComponent } from './components/header/header.component';
+import { AuthModule } from './modules/auth/auth.module';
+import { HeaderComponent } from './shared/components/header/header.component';
 import { environment } from '../environments/environment';
 import { reducers } from './store/reducers';
-import { ToastService } from './services/toast.service';
-import { AuthService } from './auth/auth.service';
-import { HomeModule } from './home/home.module';
-import { LoadingSpinnerComponent } from './components/loading-spinner/loading-spinner.component';
-import { DeleteNotificationComponent } from './components/delete-notification/delete-notification.component';
+import { ToastService } from './shared/services/toast.service';
+import { AuthService } from './modules/auth/auth.service';
+import { HomeModule } from './modules/home/home.module';
+import { LoadingSpinnerComponent } from './shared/components/loading-spinner/loading-spinner.component';
+import { DeleteNotificationComponent } from './shared/components/delete-notification/delete-notification.component';
 
 @NgModule({
   declarations: [

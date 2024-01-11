@@ -3,7 +3,7 @@ import { ActivatedRouteSnapshot, CanActivateFn, Router, RouterStateSnapshot, Url
 import { Store } from '@ngrx/store';
 import { exhaustMap, Observable, of } from 'rxjs';
 
-import { isAuthenticated } from '../store/auth/auth.selectors';
+import { isAuthenticated } from '../../store/auth/auth.selectors';
 
 export const authGuard: CanActivateFn = (route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<boolean | UrlTree> => {
   const injector = inject(Router);

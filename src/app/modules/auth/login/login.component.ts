@@ -2,9 +2,9 @@ import { Component } from '@angular/core';
 import { AbstractControl, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Store } from '@ngrx/store';
 
-import { UserCredential } from '../../interfaces/auth';
-import { loginRequest } from '../../store/auth/auth.actions'
-import { setLoadingSpinner } from '../../store/loading-spinner/loading-spinner.actions';
+import { UserCredential } from '../../../shared/interfaces/auth';
+import { loginRequest } from '../../../store/auth/auth.actions'
+import { setLoadingSpinner } from '../../../store/loading-spinner/loading-spinner.actions';
 
 @Component({
   selector: 'app-login',

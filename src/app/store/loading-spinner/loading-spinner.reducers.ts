@@ -1,7 +1,7 @@
 import { Action, createReducer, on } from '@ngrx/store';
 
 import { setLoadingSpinner } from './loading-spinner.actions';
-import { LoadingSpinnerState } from '../../interfaces/state';
+import { LoadingSpinnerState } from '../../shared/interfaces/state';
 
 export const initialState: LoadingSpinnerState = {
   showLoading: false

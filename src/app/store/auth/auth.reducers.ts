@@ -1,7 +1,7 @@
 import { Action, createReducer, on } from '@ngrx/store';
 
 import { autoLogout, loginFailure, loginSuccess } from './auth.actions';
-import { UserState } from '../../interfaces/state';
+import { UserState } from '../../shared/interfaces/state';
 
 export const initialState: UserState = {
   userData: null,

@@ -3,9 +3,9 @@ import { AbstractControl, FormBuilder, FormGroup, Validators } from '@angular/fo
 import { Router } from '@angular/router';
 import { take } from 'rxjs';
 
-import { User } from '../../interfaces/user';
+import { User } from '../../../shared/interfaces/user';
 import { HomeService } from '../home.service';
-import { ValidatorsService } from '../../services/validators.service';
+import { ValidatorsService } from '../../../shared/services/validators.service';
 
 @Component({
   selector: 'app-update-user',

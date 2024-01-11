@@ -4,11 +4,11 @@ import { Store } from '@ngrx/store';
 import { catchError, map, mergeMap, of, take, tap } from 'rxjs';
 import { Router } from '@angular/router';
 
-import { AuthService } from '../../auth/auth.service';
-import { ToastService } from '../../services/toast.service';
+import { AuthService } from '../../modules/auth/auth.service';
+import { ToastService } from '../../shared/services/toast.service';
 import * as AuthActions from './auth.actions'
 import { setLoadingSpinner } from '../loading-spinner/loading-spinner.actions';
-import { LoadingSpinnerState } from '../../interfaces/state';
+import { LoadingSpinnerState } from '../../shared/interfaces/state';
 
 @Injectable()
 export class AuthEffects {

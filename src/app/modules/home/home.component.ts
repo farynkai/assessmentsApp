@@ -7,9 +7,9 @@ import { LiveAnnouncer } from '@angular/cdk/a11y';
 import { take } from 'rxjs';
 import { MatDialog } from "@angular/material/dialog";
 
-import { User } from '../interfaces/user';
+import { User } from '../../shared/interfaces/user';
 import { HomeService } from './home.service';
-import { DeleteNotificationComponent } from "../components/delete-notification/delete-notification.component";
+import { DeleteNotificationComponent } from '../../shared/components/delete-notification/delete-notification.component';
 
 @Component({
   selector: 'app-home-section',

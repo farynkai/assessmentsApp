@@ -1,7 +1,7 @@
 import { createFeatureSelector, createSelector } from '@ngrx/store';
 
 import { authFeatureKey } from './auth.reducers';
-import { UserState } from '../../interfaces/state';
+import { UserState } from '../../shared/interfaces/state';
 
 export const selectDataTableState = createFeatureSelector<UserState>(authFeatureKey);
 

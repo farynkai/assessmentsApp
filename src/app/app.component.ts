@@ -5,7 +5,7 @@ import { Subject, takeUntil } from 'rxjs';
 
 import { autoLogin } from './store/auth/auth.actions';
 import { getLoading } from './store/loading-spinner/loading-spinner.selectors';
-import { UserState } from './interfaces/state';
+import { UserState } from './shared/interfaces/state';
 
 @Component({
   selector: 'app-root',
