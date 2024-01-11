@@ -15,7 +15,7 @@ import { ValidatorsService } from '../../../shared/services/validators.service';
 export class UpdateUserComponent implements OnInit {
   editForm!: FormGroup;
   data: User;
-  get EditFormControls(): { [key: string]: AbstractControl } {
+  public get EditFormControls(): { [key: string]: AbstractControl } {
     return this.editForm.controls;
   }
 
@@ -35,6 +35,16 @@ export class UpdateUserComponent implements OnInit {
     this.initFilterForm();
   }
 
+  public edit(userData: User): void {
+    userData.id = this.data.id;
+    this.homeService.updatedData.next(userData);
+    this.router.navigate(['home']);
+  }
+
+  public cancel(): void {
+    this.router.navigate(['home']);
+  }
+
   private initFilterForm(): void {
     this.editForm = this.fb.group({
       name: [this.data.name, Validators.required],
@@ -44,15 +54,5 @@ export class UpdateUserComponent implements OnInit {
       role: [this.data.role, Validators.required],
       position: [this.data.position, Validators.required]
     });
-  }
-
-  edit(userData: User): void {
-    userData.id = this.data.id;
-    this.homeService.updatedData.next(userData);
-    this.router.navigate(['home']);
-  }
-
-  cancel(): void {
-    this.router.navigate(['home']);
   }
 }

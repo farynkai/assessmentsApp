@@ -13,7 +13,7 @@ import { ValidatorsService } from '../../../shared/services/validators.service';
 })
 export class AddUserComponent {
   userForm!: FormGroup;
-  get UserFormControls(): { [key: string]: AbstractControl } {
+  public get UserFormControls(): { [key: string]: AbstractControl } {
     return this.userForm.controls;
   }
 
@@ -26,18 +26,7 @@ export class AddUserComponent {
     this.initFilterForm();
   }
 
-  private initFilterForm(): void {
-    this.userForm = this.fb.group({
-      name: ['', Validators.required],
-      lastName: ['', Validators.required],
-      dateOfBirth: ['', [this.validatorsService.dateValidator, Validators.required]],
-      education: ['', Validators.required],
-      role: ['', Validators.required],
-      position: ['', Validators.required]
-    });
-  }
-
-  addUser(userData: User): void {
+  public addUser(userData: User): void {
     this.userForm.reset();
     this.setNullToErrors();
     const users = JSON.parse(localStorage.getItem('users')) || [];
@@ -51,12 +40,23 @@ export class AddUserComponent {
     this.router.navigate(['home']);
   }
 
-  cancel(): void {
+  public cancel(): void {
     this.setNullToErrors();
     this.router.navigate(['home']);
   }
 
-  setNullToErrors(): void {
+  private initFilterForm(): void {
+    this.userForm = this.fb.group({
+      name: ['', Validators.required],
+      lastName: ['', Validators.required],
+      dateOfBirth: ['', [this.validatorsService.dateValidator, Validators.required]],
+      education: ['', Validators.required],
+      role: ['', Validators.required],
+      position: ['', Validators.required]
+    });
+  }
+
+  private setNullToErrors(): void {
     Object.values(this.UserFormControls).forEach(value => {
       value.setErrors(null);
     });

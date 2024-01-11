@@ -11,15 +11,15 @@ import { UserCredential, UserInfo } from '../../shared/interfaces/auth';
 export class AuthService {
   constructor(private httpClient: HttpClient) {}
 
-  login(credentials: UserCredential): Observable<UserInfo> {
+  public login(credentials: UserCredential): Observable<UserInfo> {
     return this.httpClient.post<UserInfo>(`${environment.url}login`, credentials);
   }
 
-  setUserInLocalStorage(user: UserInfo): void {
+  public setUserInLocalStorage(user: UserInfo): void {
     localStorage.setItem('userData', JSON.stringify(user));
   }
 
-  getUserFromLocalStorage(): UserInfo {
+  public getUserFromLocalStorage(): UserInfo {
     const userDataStr = localStorage.getItem('userData');
     if (userDataStr) {
       const userData = JSON.parse(userDataStr);
@@ -28,7 +28,7 @@ export class AuthService {
     return {};
   }
 
-  deleteUserFromLocalStorage(): void {
+  public deleteUserFromLocalStorage(): void {
     localStorage.removeItem('userData');
     localStorage.removeItem('users');
   }

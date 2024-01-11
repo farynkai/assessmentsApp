@@ -6,7 +6,6 @@ import { homeGuard } from '../../shared/guards/home.guard';
 
 const routes: Routes = [
   { path: '', component: LoginComponent, canActivate: [homeGuard] },
-  { path: '', redirectTo: 'login', pathMatch: 'full' }
 ];
 
 @NgModule({

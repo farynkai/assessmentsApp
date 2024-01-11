@@ -7,7 +7,7 @@ import { ValidationErrors, AbstractControl } from '@angular/forms';
 export class ValidatorsService {
   constructor() {}
 
-  dateValidator(control: AbstractControl): ValidationErrors | null {
+  public dateValidator(control: AbstractControl): ValidationErrors | null {
     let today = new Date();
     if (new Date(control.value) > today) {
       return { 'GreaterThanToday': true };

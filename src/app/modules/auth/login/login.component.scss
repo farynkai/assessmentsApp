@@ -23,12 +23,14 @@
     justify-content: flex-end;
 }
 
-::ng-deep {
+:host {
+  ::ng-deep {
     .mdc-button.mat-mdc-button-base {
-        width: 140px;
-        font-size: large;
-        height: 48px;
+      width: 140px;
+      font-size: large;
+      height: 48px;
     }
+  }
 }
 
 

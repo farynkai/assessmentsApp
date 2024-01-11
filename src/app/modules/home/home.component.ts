@@ -36,9 +36,10 @@ export class HomeComponent implements OnInit, AfterViewInit{
     this.dataSource = new MatTableDataSource(this.users);
   }
 
-  applyFilter(event: Event): void {
+  public applyFilter(event: Event): void {
     const filterValue = (event.target as HTMLInputElement).value;
     this.dataSource.filter = filterValue.trim().toLowerCase();
+
     if (this.dataSource.paginator) {
       this.dataSource.paginator.firstPage();
     }
@@ -48,12 +49,7 @@ export class HomeComponent implements OnInit, AfterViewInit{
     this.dataSourceUpdate();
   }
 
-  dataSourceUpdate(): void {
-    this.dataSource.paginator = this.paginator;
-    this.dataSource.sort = this.sort;
-  }
-
-  announceSortChange(sortState: Sort): void {
+  public announceSortChange(sortState: Sort): void {
     if (sortState.direction) {
       this._liveAnnouncer.announce(`Sorted ${sortState.direction}ending`);
     } else {
@@ -61,10 +57,11 @@ export class HomeComponent implements OnInit, AfterViewInit{
     }
   }
 
-  updateItem(item: User): void {
+  public updateItem(item: User): void {
     this.homeService.userToEdit.next(item);
     this.router.navigate(['edit']);
     this.users = JSON.parse(localStorage.getItem('users'));
+
     this.homeService.updatedData.pipe(
       take(1)
     ).subscribe((newData: User) => {
@@ -76,15 +73,7 @@ export class HomeComponent implements OnInit, AfterViewInit{
     })
   }
 
-  removeItem(item): void {
-    const users = JSON.parse(localStorage.getItem('users'));
-    this.users = users.filter( el => el.id !== item.id );
-    localStorage.setItem('users', JSON.stringify(this.users))
-    this.dataSource = new MatTableDataSource(this.users);
-    this.dataSourceUpdate();
-  }
-
-  openDialog(item: User): void {
+  public openDialog(item: User): void {
     const dialogRef = this.dialog.open(DeleteNotificationComponent, {
       width: '300px',
       data: item
@@ -97,5 +86,18 @@ export class HomeComponent implements OnInit, AfterViewInit{
           this.removeItem(item);
         }
       })
+  }
+
+  private dataSourceUpdate(): void {
+    this.dataSource.paginator = this.paginator;
+    this.dataSource.sort = this.sort;
+  }
+
+  private removeItem(item): void {
+    const users = JSON.parse(localStorage.getItem('users'));
+    this.users = users.filter( el => el.id !== item.id );
+    localStorage.setItem('users', JSON.stringify(this.users))
+    this.dataSource = new MatTableDataSource(this.users);
+    this.dataSourceUpdate();
   }
 }

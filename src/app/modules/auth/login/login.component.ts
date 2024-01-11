@@ -13,7 +13,7 @@ import { setLoadingSpinner } from '../../../store/loading-spinner/loading-spinne
 })
 export class LoginComponent {
   loginForm!: FormGroup;
-  get loginFormControls(): { [key: string]: AbstractControl } {
+  public get loginFormControls(): { [key: string]: AbstractControl } {
     return this.loginForm.controls;
   }
 
@@ -24,6 +24,13 @@ export class LoginComponent {
     this.initFilterForm();
   }
 
+  public login (credential: UserCredential): void {
+    this.loginForm.reset();
+    this.store.dispatch(setLoadingSpinner({ status: true }));
+    this.store.dispatch(loginRequest(credential));
+    this.setNullToErrors();
+  }
+
   private initFilterForm(): void {
     this.loginForm = this.fb.group({
       email: ['', Validators.required],
@@ -31,14 +38,7 @@ export class LoginComponent {
     });
   }
 
-  login (credential: UserCredential): void {
-    this.loginForm.reset();
-    this.store.dispatch(setLoadingSpinner({ status: true }));
-    this.store.dispatch(loginRequest(credential));
-    this.setNullToErrors();
-  }
-
-  setNullToErrors(): void {
+  private setNullToErrors(): void {
     Object.values(this.loginFormControls).forEach(value => {
       value.setErrors(null);
     });

@@ -8,7 +8,7 @@ import { HttpErrorResponse } from '@angular/common/http';
 export class ToastService {
   constructor(private snackBar: MatSnackBar) {}
 
-  showError(error: HttpErrorResponse): void {
+  public showError(error: HttpErrorResponse): void {
     this.snackBar.open(`Error message: ${error.message}`, 'Close', { duration: 3000, });
   }
 }
