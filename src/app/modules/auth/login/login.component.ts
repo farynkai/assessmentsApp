@@ -21,6 +21,7 @@ export class LoginComponent {
     private fb: FormBuilder,
     private store: Store
   ) {
+    localStorage.clear();
     this.initFilterForm();
   }
 
