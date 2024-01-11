@@ -1,20 +1,19 @@
-import { AfterViewInit, Component, OnInit, ViewChild } from '@angular/core';
+import { AfterViewInit, ChangeDetectionStrategy, Component, OnInit, ViewChild } from '@angular/core';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort, Sort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
-import { Router } from '@angular/router';
 import { LiveAnnouncer } from '@angular/cdk/a11y';
 import { take } from 'rxjs';
 import { MatDialog } from "@angular/material/dialog";
 
 import { User } from '../../shared/interfaces/user';
-import { HomeService } from './home.service';
 import { DeleteNotificationComponent } from '../../shared/components/delete-notification/delete-notification.component';
 
 @Component({
   selector: 'app-home-section',
   templateUrl: './home.component.html',
-  styleUrls: ['./home.component.scss']
+  styleUrls: ['./home.component.scss'],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class HomeComponent implements OnInit, AfterViewInit{
   displayedColumns: string[] = ['number', 'name', 'lastName', 'dateOfBirth', 'education', 'role', 'position', 'action'];
@@ -25,14 +24,16 @@ export class HomeComponent implements OnInit, AfterViewInit{
   @ViewChild(MatSort) sort!: MatSort;
   constructor(
     private _liveAnnouncer: LiveAnnouncer,
-    private router: Router,
-    private homeService: HomeService,
     public dialog: MatDialog
   ) {}
 
   ngOnInit(): void {
     this.users = JSON.parse(localStorage.getItem('users')) || [];
     this.dataSource = new MatTableDataSource(this.users);
+  }
+
+  ngAfterViewInit(): void {
+    this.dataSourceUpdate();
   }
 
   public applyFilter(event: Event): void {
@@ -44,32 +45,12 @@ export class HomeComponent implements OnInit, AfterViewInit{
     }
   }
 
-  ngAfterViewInit(): void {
-    this.dataSourceUpdate();
-  }
-
   public announceSortChange(sortState: Sort): void {
     if (sortState.direction) {
       this._liveAnnouncer.announce(`Sorted ${sortState.direction}ending`);
     } else {
       this._liveAnnouncer.announce('Sorting cleared');
     }
-  }
-
-  public updateItem(item: User): void {
-    this.homeService.userToEdit.next(item);
-    this.router.navigate(['edit']);
-    this.users = JSON.parse(localStorage.getItem('users'));
-
-    this.homeService.updatedData.pipe(
-      take(1)
-    ).subscribe((newData: User) => {
-      const itemIndex = this.users.findIndex((item => item.id === newData['id']));
-      this.users[itemIndex] = newData;
-      localStorage.setItem('users', JSON.stringify(this.users));
-      this.dataSource = new MatTableDataSource(this.users);
-      this.dataSourceUpdate();
-    })
   }
 
   public openDialog(item: User): void {

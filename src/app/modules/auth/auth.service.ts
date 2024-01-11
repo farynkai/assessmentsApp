@@ -22,8 +22,7 @@ export class AuthService {
   public getUserFromLocalStorage(): UserInfo {
     const userDataStr = localStorage.getItem('userData');
     if (userDataStr) {
-      const userData = JSON.parse(userDataStr);
-      return userData;
+      return JSON.parse(userDataStr);
     }
     return {};
   }

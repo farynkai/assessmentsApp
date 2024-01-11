@@ -6,11 +6,13 @@ import { exhaustMap, Observable, of } from 'rxjs';
 import { isAuthenticated } from '../../store/auth/auth.selectors';
 
 export const authGuard: CanActivateFn = (route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<boolean | UrlTree> => {
-  const injector = inject(Router);
-  return inject(Store).select(isAuthenticated).pipe(
+  const routerInjector = inject(Router);
+  const storeInjector = inject(Store);
+
+  return storeInjector.select(isAuthenticated).pipe(
     exhaustMap((isAuthenticated) => {
       if (!isAuthenticated) {
-        of(injector.navigateByUrl('login'));
+        of(routerInjector.navigateByUrl('login'));
       }
       return of(isAuthenticated);
     })

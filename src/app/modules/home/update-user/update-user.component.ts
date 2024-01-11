@@ -1,43 +1,50 @@
-import { Component, OnInit } from '@angular/core';
+import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
 import { AbstractControl, FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { take } from 'rxjs';
 
 import { User } from '../../../shared/interfaces/user';
-import { HomeService } from '../home.service';
 import { ValidatorsService } from '../../../shared/services/validators.service';
 
 @Component({
   selector: 'app-update-user',
   templateUrl: './update-user.component.html',
-  styleUrls: ['./update-user.component.scss']
+  styleUrls: ['./update-user.component.scss'],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class UpdateUserComponent implements OnInit {
   editForm!: FormGroup;
   data: User;
+  users: User[];
+
   public get EditFormControls(): { [key: string]: AbstractControl } {
     return this.editForm.controls;
   }
 
   constructor(
     private fb: FormBuilder,
-    private homeService: HomeService,
     private router: Router,
+    private activatedRoute: ActivatedRoute,
     private validatorsService: ValidatorsService
   ) {}
 
   ngOnInit(): void {
-    this.homeService.userToEdit.pipe(
+    this.users = JSON.parse(localStorage.getItem('users'));
+    this.activatedRoute.params.pipe(
       take(1)
-    ).subscribe((user: User) => {
-      this.data = user;
-    })
-    this.initFilterForm();
+    ).subscribe(params => {
+      this.data = this.findUserById(+params['id']);
+      if (this.data) {
+        this.initFilterForm();
+      }
+    });
   }
 
   public edit(userData: User): void {
     userData.id = this.data.id;
-    this.homeService.updatedData.next(userData);
+    const itemIndex = this.users.findIndex((item => item.id === userData.id));
+    this.users[itemIndex] = userData;
+    localStorage.setItem('users', JSON.stringify(this.users));
     this.router.navigate(['home']);
   }
 
@@ -54,5 +61,9 @@ export class UpdateUserComponent implements OnInit {
       role: [this.data.role, Validators.required],
       position: [this.data.position, Validators.required]
     });
+  }
+
+  private findUserById(id: number): User | undefined {
+    return this.users.find(user => user.id === id);
   }
 }

@@ -1,4 +1,4 @@
-import { Component, Inject } from '@angular/core';
+import { ChangeDetectionStrategy, Component, Inject } from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialogRef } from "@angular/material/dialog";
 
 import { User } from "../../interfaces/user";
@@ -6,7 +6,8 @@ import { User } from "../../interfaces/user";
 @Component({
   selector: 'app-delete-notification',
   templateUrl: './delete-notification.component.html',
-  styleUrl: './delete-notification.component.scss'
+  styleUrl: './delete-notification.component.scss',
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class DeleteNotificationComponent {
   constructor(

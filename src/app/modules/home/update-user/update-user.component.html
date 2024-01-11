@@ -1,4 +1,4 @@
-<div class="container">
+<div class="container" *ngIf="data?.id; else showText">
   <h2>Issue id: {{ data.id }}</h2>
   <form class="mat-dialog-content" [formGroup]="editForm" (ngSubmit)="edit(editForm.value)">
     <div>
@@ -57,3 +57,7 @@
     </div>
   </form>
 </div>
+<ng-template #showText>
+  <p class="error-text">No user with current id.</p>
+</ng-template>
+

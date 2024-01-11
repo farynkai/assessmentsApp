@@ -1,15 +1,15 @@
-import { Component } from '@angular/core';
+import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { AbstractControl, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 
 import { User } from '../../../shared/interfaces/user';
-import { HomeService } from '../home.service';
 import { ValidatorsService } from '../../../shared/services/validators.service';
 
 @Component({
   selector: 'app-add-user',
   templateUrl: './add-user.component.html',
-  styleUrls: ['./add-user.component.scss']
+  styleUrls: ['./add-user.component.scss'],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class AddUserComponent {
   userForm!: FormGroup;
@@ -19,7 +19,6 @@ export class AddUserComponent {
 
   constructor(
     private fb: FormBuilder,
-    private homeService: HomeService,
     private router: Router,
     private validatorsService: ValidatorsService
   ) {
