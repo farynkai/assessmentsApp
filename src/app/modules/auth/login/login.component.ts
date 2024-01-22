@@ -1,10 +1,12 @@
 import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { AbstractControl, FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { Store } from '@ngrx/store';
+import { take} from "rxjs";
+import { Router } from "@angular/router";
 
-import { UserCredential } from '../../../shared/interfaces/auth';
-import { loginRequest } from '../../../store/auth/auth.actions'
-import { setLoadingSpinner } from '../../../store/loading-spinner/loading-spinner.actions';
+import { UserCredential, UserInfo } from '../../../shared/interfaces/auth';
+import { LoadingSpinnerService } from "../../../shared/services/loading-spinner.service";
+import { AuthService } from "../auth.service";
+import { ToastService } from "../../../shared/services/toast.service";
 
 @Component({
   selector: 'app-login',
@@ -20,7 +22,10 @@ export class LoginComponent {
 
   constructor(
     private fb: FormBuilder,
-    private store: Store
+    private router: Router,
+    private loadingSpinner: LoadingSpinnerService,
+    private authService: AuthService,
+    private toastService: ToastService
   ) {
     localStorage.clear();
     this.initFilterForm();
@@ -28,8 +33,20 @@ export class LoginComponent {
 
   public login (credential: UserCredential): void {
     this.loginForm.reset();
-    this.store.dispatch(setLoadingSpinner({ status: true }));
-    this.store.dispatch(loginRequest(credential));
+    this.loadingSpinner.isLoading.next(true);
+
+    this.authService.login(credential).pipe(
+      take(1)
+    ).subscribe((userInfo: UserInfo) => {
+        this.authService.setUserInLocalStorage(userInfo);
+        this.loadingSpinner.isLoading.next(false);
+        this.router.navigate(['home']);
+      },
+      error => {
+        this.loadingSpinner.isLoading.next(false);
+        this.toastService.showError(error);
+      })
+
     this.setNullToErrors();
   }
 

@@ -1,8 +1,7 @@
 import { ChangeDetectionStrategy, Component } from '@angular/core';
-import { Store } from '@ngrx/store';
 
-import { autoLogout } from '../../../store/auth/auth.actions';
-import { UserState } from '../../interfaces/state';
+import { AuthService } from "../../../modules/auth/auth.service";
+import { Router } from "@angular/router";
 
 @Component({
   selector: 'app-header',
@@ -11,8 +10,12 @@ import { UserState } from '../../interfaces/state';
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class HeaderComponent {
-  constructor( private store: Store<UserState> ) {}
+  constructor(
+    private authService: AuthService,
+    private router: Router
+  ) {}
   public onLogout(): void {
-    this.store.dispatch(autoLogout());
+    this.authService.deleteUserFromLocalStorage();
+    this.router.navigate(['login']);
   }
 }

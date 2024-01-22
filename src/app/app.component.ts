@@ -1,42 +1,37 @@
-import { Component, OnInit, OnDestroy, ChangeDetectionStrategy } from '@angular/core';
-import { Store } from '@ngrx/store';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { NavigationEnd, Router } from '@angular/router';
 import { Subject, takeUntil } from 'rxjs';
 
-import { autoLogin } from './store/auth/auth.actions';
-import { getLoading } from './store/loading-spinner/loading-spinner.selectors';
 import { UserState } from './shared/interfaces/state';
+import { LoadingSpinnerService } from "./shared/services/loading-spinner.service";
 
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
-  styleUrls: ['./app.component.scss'],
-  changeDetection: ChangeDetectionStrategy.OnPush
+  styleUrls: ['./app.component.scss']
 })
 export class AppComponent implements OnInit, OnDestroy {
   title = 'testApp';
   showHeader: boolean;
-  showLoading$ = this.store.select(getLoading);
+  showLoading: boolean;
   destroyed$ = new Subject<void>();
   constructor(
-    private store: Store<UserState>,
-    private router: Router
+    private router: Router,
+    private loadingSpinner: LoadingSpinnerService
   ) {
     this.router.events.pipe(
       takeUntil(this.destroyed$)
     ).subscribe((event: any) => {
       if (event instanceof NavigationEnd) {
-        if ( event.url === '/login' ||  event.url === '/') {
-          this.showHeader = false;
-        } else {
-          this.showHeader = true;
-        }
+        this.showHeader = event.url !== '/login';
       }
     });
   }
 
   ngOnInit() {
-    this.store.dispatch(autoLogin());
+    this.loadingSpinner.isLoading.subscribe((value) => {
+      this.showLoading = value;
+    })
   }
 
   ngOnDestroy() {
